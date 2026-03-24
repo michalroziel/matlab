@@ -14,6 +14,16 @@ function [x, y, datenGeladen] = datenAusVektoren()
     % suche im base workspace nach nameX für X Vektor 
     % und nameY für Y Vektor 
     
+    % zuerst pruefen wir, ob beide Namen im base workspace existieren
+    if evalin('base', ['exist(''' nameX ''', ''var'')']) == 0 || ...
+       evalin('base', ['exist(''' nameY ''', ''var'')']) == 0
+        x = [];
+        y = [];
+        fprintf(' \n Einer oder beide Vektornamen wurden nicht gefunden. \n ');
+        return;
+    end
+
+    % wenn beide Namen existieren, koennen wir die Vektoren laden
     x = evalin('base', nameX);
     y = evalin('base', nameY);
 

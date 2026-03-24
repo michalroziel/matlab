@@ -1,14 +1,21 @@
 
 function [koeffizienten, yFit, fehlerQuadratisch] = calculate_regression(x, y, grad)
     
+    % koeffizienten: Koeffizienten des Regressionspolynoms
+    % yFit: Werte des Polynoms an den gegebenen x
+    % fehlerQuadratisch: Summe der quadrierten Fehler
 
+    % wir sanitizem die Daten und die Eingabe für den Grad der Regression
     if check_Data(x, y) == false
         fprintf(' \n Die Daten sind ungueltig. \n');
         error('Fehler!');
     end
 
+    % wir legen einen Maximalen grad fest um interpoltation zu vermeiden
     maxGrad = length(x) - 2;
 
+    % der regressions grad muss eien nicht negtaive ganze Zahl sein
+    % floor(grad) ~= grad checkt ob grad eine ganze Zahl ist (floor = abrunden)
     if grad < 0 || floor(grad) ~= grad
         fprintf(' \n Der Grad muss eine positive ganze Zahl sein. \n');
         error('Fehler!');
@@ -22,6 +29,7 @@ function [koeffizienten, yFit, fehlerQuadratisch] = calculate_regression(x, y, g
 
     % umwandeln / checken ob die eigaben auch
     % Spalten vectors sind
+    % egal ob user [1 2 3] oder [ 1; 2; 3] eingegeben hat -> Spaltenvektor 
     x = x(:);
     y = y(:);
 
@@ -30,10 +38,10 @@ function [koeffizienten, yFit, fehlerQuadratisch] = calculate_regression(x, y, g
 
     % beispiel : 
     % p(x) = a*x^2 + b*x + c
-    % für 5 Data Points und grad 2 braucht das Polynom 3 Koeffizienten 
+    % für grad 2, also 3 Koeffizienten, daher grad + 1.
 
     % length(x) - Anzah der Datenpunkte
-    % grad + 1  - Anzahl der Koeffizienten 
+    % grad + 1  - Anzahl der Koeffizienten des Polynom 
     A = zeros(length(x), grad + 1);
 
     % wir füllen die matrix für alle Datenpunkte bis zum gewählten grad 
@@ -53,6 +61,7 @@ function [koeffizienten, yFit, fehlerQuadratisch] = calculate_regression(x, y, g
     end
 
     % Jetzt können wir die Koeffizienten mit dem \ operator berechnen
+    % mit \ wird die lineare Gleichung A * koeffizienten = y gelöst
     koeffizienten = A \ y;
 
 

@@ -13,7 +13,7 @@ function [x, y, datenGeladen] = datenPunktWeise()
     % Eingabe muss eine ganze, positive Zahl > 0 sein 
 
     if n <= 0 || floor(n) ~= n
-        disp('Die Anzahl muss eine positive ganze Zahl sein.');
+        disp( ' Die Anzahl muss eine positive ganze Zahl sein. ' );
         return;
     end
     
@@ -29,10 +29,10 @@ function [x, y, datenGeladen] = datenPunktWeise()
     
     if check_Data(x, y)
         datenGeladen = true;
-        disp('Daten wurden erfolgreich gespeichert.');
+        disp( ' Daten wurden erfolgreich gespeichert. ' );
     else
         x = [];
         y = [];
-        disp('Daten sind ungültig und wurden verworfen.');
+        disp( ' Daten sind ungültig und wurden verworfen. ' );
     end
 end
